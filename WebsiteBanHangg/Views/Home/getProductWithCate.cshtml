@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewData["Title"] = "getProductWithCate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<Product>
+@foreach (var product in Model)
+{
+    @await Html.PartialAsync("ProductPartial", product)
+}
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        @Html.PagedListPager(Model, page => Url.Action("getProductWithCate", new { page = page, CategoryId = ViewBag.CategoryId }), new PagedListRenderOptions
+        {
+        LiElementClasses = new[] { "page-item" },
+        PageClasses = new[] { "page-link" },
+        PreviousElementClass = "page-item",
+        NextElementClass = "page-item",
+        UlElementClasses = new[] { "pagination" },
+        LinkToPreviousPageFormat = "&laquo;",
+        LinkToNextPageFormat = "&raquo;",
+        DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+        DisplayLinkToNextPage = PagedListDisplayMode.Always,
+        LinkToIndividualPageFormat = "{0}", // Số trang
+        ClassToApplyToFirstListItemInPager = "page-item",
+        ClassToApplyToLastListItemInPager = "page-item"
+        })
+    </ul>
+</nav>

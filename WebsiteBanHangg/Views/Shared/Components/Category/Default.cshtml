@@ -1,0 +1,20 @@
+﻿@model IEnumerable<WebsiteBanHangg.Models.Category>
+
+<ul class="nav nav-pills d-inline-flex text-center mb-5">
+    <li class="nav-item">
+        <a class="d-flex m-2 py-2 bg-light"
+           href="/">
+            <span class="text-dark" style="width: 130px;">All Products</span>
+        </a>
+    </li>
+    @foreach (var category in Model)
+    {
+        <li class="nav-item">
+            <a class="d-flex py-2 m-2 bg-light"
+           asp-controller="Home" asp-action="getProductWithCate"
+           asp-route-CategoryId="@category.CategoryId">
+                <span class="text-dark" style="width: 130px;">@category.CategoryName</span>
+            </a>
+        </li>
+    }
+</ul>

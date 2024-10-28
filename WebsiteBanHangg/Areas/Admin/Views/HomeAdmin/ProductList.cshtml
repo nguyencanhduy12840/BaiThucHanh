@@ -1,0 +1,77 @@
+﻿@using WebsiteBanHangg.Models;
+@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<Product>
+
+@{
+    ViewData["Title"] = "ProductList";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<h2>Product List</h2>
+
+<p>
+    <a asp-action="CreateNewProduct">Create New</a>
+</p>
+<p>@TempData["Message"]</p>
+<table class="table">
+    <thead>
+        <tr class="table-warning">
+            <th>
+                ProductName
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th>
+                Description
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr class="table-success">
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                <a asp-action="UpdateProduct" asp-route-productId="@item.ProductId">Edit</a> |
+                <a asp-action="ProductDetail" asp-route-productId="@item.ProductId">Details</a> |
+                <a asp-action="DeleteProduct" asp-route-productId="@item.ProductId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        @Html.PagedListPager(Model, page => Url.Action("ProductList", new { page = page }), new PagedListRenderOptions
+        {
+        LiElementClasses = new[] { "page-item" },
+        PageClasses = new[] { "page-link" },
+        PreviousElementClass = "page-item",
+        NextElementClass = "page-item",
+        UlElementClasses = new[] { "pagination" },
+        LinkToPreviousPageFormat = "&laquo;",
+        LinkToNextPageFormat = "&raquo;",
+        DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+        DisplayLinkToNextPage = PagedListDisplayMode.Always,
+        LinkToIndividualPageFormat = "{0}", // Số trang
+        ClassToApplyToFirstListItemInPager = "page-item",
+        ClassToApplyToLastListItemInPager = "page-item"
+        })
+    </ul>
+</nav>
+
